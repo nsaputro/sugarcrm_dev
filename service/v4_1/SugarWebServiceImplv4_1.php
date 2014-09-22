@@ -140,8 +140,22 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
 
     	} // if
 
+
+		$returnRelationshipList = array();
+		foreach($linkoutput_list as $rel){
+			$link_output = array();
+			foreach($rel as $row){
+				$rowArray = array();
+				foreach($row['records'] as $record){
+					$rowArray[]['link_value'] = $record;
+				}
+				$link_output[] = array('name' => $row['name'], 'records' => $rowArray);
+			}
+			$returnRelationshipList[]['link_list'] = $link_output;
+		}
+
     	$GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
-    	return array('entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
+    	return array('entry_list'=>$output_list, 'relationship_list' => $returnRelationshipList);
     }
 
 
